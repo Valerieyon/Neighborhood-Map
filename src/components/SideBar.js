@@ -6,7 +6,7 @@ export default class SideBar extends Component {
     return (
       <div className="sideBar">
         <input type={"search"} id={"search"} placeholder={"Find Venues"}/>
-        <VenueList/>
+        <VenueList {...this.props} handleListItemClick={this.props.handleListItemClick}/>
       </div>
     )
   }

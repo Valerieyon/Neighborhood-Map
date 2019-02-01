@@ -21,7 +21,12 @@ li.listItem {
   font-size: 1rem;
   padding:.5rem;
   margin-top:1rem;
-  box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3)
+  box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  background: #aa7bd8;
+  color: white;
+  display:flex;
+  align-items: center;
 }
 
 .sideBar {

@@ -29,14 +29,18 @@ class App extends Component {
     FoursquareAPI.getVenueDetails(marker.id).then(result => {
       const newVenue = Object.assign(venue,result.response.venue);
       this.setState({venues:Object.assign(this.state.venues,newVenue)});
-      //console.log(newVenue)
+      
     })
-    
   }
+  handleListItemClick = (venue) => {
+    const marker = this.state.markers.find(marker => marker.id===venue.id);
+    this.handleMarkerClick(marker);
+ }
+
   componentDidMount(){
     FoursquareAPI.search({
-      near:"Des Plaines,IL",
-      query:"bread",
+      near:"Austin,TX",
+      query:"taco",
       limit:10
     }).then(results => {
       const { venues } = results.response;
@@ -58,7 +62,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SideBar/>
+        <SideBar {...this.state} handleListItemClick={this.handleListItemClick}/>
         <Map {...this.state} handleMarkerClick={this.handleMarkerClick}/>
       </div>
     );
