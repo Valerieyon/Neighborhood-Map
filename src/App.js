@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Map from "./components/Map";
 import FoursquareAPI from "./API/"
+import SideBar from './components/SideBar';
 
 class App extends Component {
   constructor(){
@@ -10,7 +11,7 @@ class App extends Component {
       venues:[],
       markers:[],
       center:[],
-      zoom:12
+      zoom:9
     };
   }
   closeAllMarkers = () => {
@@ -57,6 +58,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <SideBar/>
         <Map {...this.state} handleMarkerClick={this.handleMarkerClick}/>
       </div>
     );
