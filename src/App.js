@@ -7,6 +7,7 @@ import CheeseburgerMenu from 'cheeseburger-menu'
 import HamburgerMenu from 'react-hamburger-menu'
 import SideBar from './components/SideBar';
 
+
 window.gm_authFailure = function () {
   alert(`
    Google Maps failed to load!
@@ -15,23 +16,6 @@ window.gm_authFailure = function () {
    or you are using an invalid API key.`);
 }
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-  componentDidCatch(error, info) {
-    // Display fallback UI
-    this.setState({ hasError: true });
-  }
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
-    }
-    return this.props.children;
-  }
-}
 class App extends Component {
   constructor() {
     super();
@@ -46,12 +30,15 @@ class App extends Component {
       menuOpen: false
     };
   }
+  //opens side bar
   openMenu() {
     this.setState({ menuOpen: true })
   }
+  //closes the side bar
   closeMenu() {
     this.setState({ menuOpen: false })
   }
+  //restarts all the markers
   closeAllMarkers = () => {
     const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
@@ -59,6 +46,7 @@ class App extends Component {
     });
     this.setState({ markers: Object.assign(this.state.markers, markers) });
   }
+  //gets the venue details from Foursquare
   handleMarkerClick = (marker) => {
     this.closeAllMarkers();
     marker.isOpen = true;
@@ -69,14 +57,14 @@ class App extends Component {
       this.setState({ venues: Object.assign(this.state.venues, newVenue) });
 
     })
-
   }
-
+  //finds the corresponding marker for the clicked venue in the side bar
   handleListItemClick = (venue) => {
     const marker = this.state.markers.find(marker => marker.id === venue.id);
     this.handleMarkerClick(marker);
     this.closeMenu();
   }
+  //handles the button click to show the side bar; the button is used for accessibility purpose
   handleClick = () => {
     if (this.state.menuOpen === false) {
       this.openMenu();
@@ -99,38 +87,52 @@ class App extends Component {
           isVisible: true,
           id: venue.id
         }
-      });
+      })
       this.setState({ venues, center, markers });
-
     });
   }
 
   render() {
     return (
-      <ErrorBoundary>
-        <main>
-          <div className="App" role="application" aria-label="Map of Chicago locations with organic products">
-            <p id="sideBarHint" tabIndex="1">Click TAB then ENTER or on green bar for list view of all the locations from Foursquare</p>
+      <main>
+        <div
+          className="App"
+          role="application"
+          aria-label="Map of Chicago locations with organic products"
+        >
+          <p
+            id="sideBarHint"
+            tabIndex="1">Click TAB then ENTER or on green bar for list view of all the locations from Foursquare
+            </p>
 
-            <button className="hamburger-container" tabIndex="2" aria-label="Toggle side menu" onClick={this.handleClick}>
-              <CheeseburgerMenu
-                isOpen={this.state.menuOpen}
-                closeCallback={this.closeMenu.bind(this)}
-              >
-                <SideBar {...this.state} handleListItemClick={this.handleListItemClick} />
-              </CheeseburgerMenu>
-              <HamburgerMenu
-                isOpen={this.state.menuOpen}
-                menuClicked={this.openMenu.bind(this)}
-                strokeWidth={3}
-                height={22}
-                color={"green"}
+          <button //displays the side bar with the search textbox and all the venues
+            className="hamburgerContainer"
+            tabIndex="2"
+            aria-label="Toggle side menu"
+            onClick={this.handleClick}
+          >
+            <CheeseburgerMenu
+              isOpen={this.state.menuOpen}
+              closeCallback={this.closeMenu.bind(this)}
+            >
+              <SideBar {...this.state}
+                handleListItemClick={this.handleListItemClick}
               />
-            </button>
-            <Map {...this.state} handleMarkerClick={this.handleMarkerClick} />
-          </div>
-        </main>
-      </ErrorBoundary>
+            </CheeseburgerMenu>
+            <HamburgerMenu
+              isOpen={this.state.menuOpen}
+              menuClicked={this.openMenu.bind(this)}
+              strokeWidth={3}
+              height={22}
+              color={"green"}
+            />
+          </button>
+          <Map {...this.state} //displays the map
+            handleMarkerClick={this.handleMarkerClick}
+          />
+        </div>
+      </main>
+
     );
   }
 }
