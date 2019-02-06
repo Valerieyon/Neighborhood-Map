@@ -10,21 +10,28 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     center={props.center}
   >
     {props.markers &&
-      props.markers.filter(marker => marker.isVisible).map((marker, idx, arr) => {
+      props.markers.filter(marker => marker.isVisible).map((marker, idx,arr) => {
         const venueInfo = props.venues.find(venue => venue.id === marker.id)
+        //console.log(marker);
         return (<Marker
           key={idx}
           position={{ lat: marker.lat, lng: marker.lng }}
           onClick={() => props.handleMarkerClick(marker)}
-          animation = {arr.length === 1 ? google.maps.Animation.BOUNCE : google.maps.Animation.DROP}
+          // animation = {arr.length===1 ? google.maps.Animation.BOUNCE : google.maps.Animation.DROP}
+          animation = {google.maps.Animation.DROP}
         >
           {marker.isOpen && venueInfo.bestPhoto && (
+            
           <InfoWindow>
             <React.Fragment>
-                <img src={`${venueInfo.bestPhoto.prefix}180x180${venueInfo.bestPhoto.suffix}`} alt={"Venue Front"} />
+              <img src={`${venueInfo.bestPhoto.prefix}180x180${venueInfo.bestPhoto.suffix}`} alt={"Venue front or Products sold in venue"}/>
               <p>{venueInfo.name}</p>
+              <p>address: {venueInfo.location.address}</p>
+              <p>call us: {venueInfo.contact.phone}</p>
+              {/* {marker.setAnimation(google.maps.Animation.BOUNCE)} */}
             </React.Fragment>
           </InfoWindow>)}
+          
         </Marker>
         )
       }
@@ -39,7 +46,7 @@ export default class Map extends Component {
         {...this.props}
         googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBJAQphhfpxArJ40EuKiTXb9qGytot_Flg"
         loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `100%`,width: `75%` }} />}
+        containerElement={<div style={{ height:`100%`,width: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
       />
     )

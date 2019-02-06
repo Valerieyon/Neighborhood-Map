@@ -9,6 +9,7 @@ export default class SideBar extends Component {
       venues:[]
     };
   }
+  
   handleFilterVenues = () => {
     if(this.state.query.trim() !== "") {
       const venues = this.props.venues.filter(venue => venue.name
@@ -33,11 +34,14 @@ export default class SideBar extends Component {
       return marker;
     });
     this.props.updateSuperState({markers});
+    
   }
   render() {
     return (
       <div className="sideBar">
+        <label htmlFor={"search"}>Search:</label> 
         <input type={"search"} id={"search"} placeholder={"Find Venues"} onChange = {this.handleChange}/>
+        <p className="hint">Click outside the menu to close it, or swipe it closed on touch device</p>
         <VenueList {...this.props} 
           venues={this.handleFilterVenues()} 
           handleListItemClick={this.props.handleListItemClick}/>
