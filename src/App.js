@@ -7,6 +7,14 @@ import CheeseburgerMenu from 'cheeseburger-menu'
 import HamburgerMenu from 'react-hamburger-menu'
 import SideBar from './components/SideBar';
 
+window.gm_authFailure = function() {
+  alert(`
+   Google Maps failed to load!
+   
+   You may have exceeded your Google Maps Api quota
+   or you are using an invalid API key.`);
+}
+
 class App extends Component {
   constructor() {
     super();
@@ -24,7 +32,6 @@ class App extends Component {
   openMenu() {
     this.setState({ menuOpen: true })
   }
-
   closeMenu() {
     this.setState({ menuOpen: false })
   }
@@ -53,6 +60,11 @@ class App extends Component {
     this.handleMarkerClick(marker);
     this.closeMenu();
   }
+  handleClick = () => {
+    if (this.state.menuOpen === false) {
+  		this.openMenu();
+    } 
+  }
   
   componentDidMount() {
     FoursquareAPI.search({
@@ -72,33 +84,34 @@ class App extends Component {
         }
       });
       this.setState({ venues, center, markers });
-      //console.log(results)
+      
     });
   }
 
   render() {
     return (
-      <div className="App">
-        <p id="sideBarHint">Click TAB then ENTER or on green bar for list view of all the locations from Foursquare</p>
-        <CheeseburgerMenu
-          isOpen={this.state.menuOpen}
-          closeCallback={this.closeMenu.bind(this)}>
-          <SideBar {...this.state} handleListItemClick={this.handleListItemClick} closeCallback={this.closeMenu.bind(this)} />
-        </CheeseburgerMenu>
-        <HamburgerMenu
-          isOpen={this.state.menuOpen}
-          menuClicked={this.openMenu.bind(this)}
-          width={35}
-          height={450}
-          strokeWidth={300}
-          rotate={0}
-          color='green'
-          borderRadius={0}
-          animationDuration={1}
-        />
-        
-        <Map {...this.state} handleMarkerClick={this.handleMarkerClick} />
-      </div>
+      <main>
+        <div className="App" role="application" aria-label="Map of New York locations with organic products">
+          <p id="sideBarHint" tabIndex="1">Click TAB then ENTER or on green bar for list view of all the locations from Foursquare</p>
+          
+          <button className="hamburger-container" tabIndex="2" aria-label="Toggle side menu" onClick={this.handleClick}>
+            <CheeseburgerMenu
+               isOpen={this.state.menuOpen}
+               closeCallback={this.closeMenu.bind(this)}
+            >
+              <SideBar {...this.state} handleListItemClick={this.handleListItemClick} />
+            </CheeseburgerMenu>
+            <HamburgerMenu
+              isOpen={this.state.menuOpen}
+              menuClicked={this.openMenu.bind(this)}
+              strokeWidth={1500}
+							height={22}
+							color={"green"}
+            />     
+          </button>  
+          <Map {...this.state} handleMarkerClick={this.handleMarkerClick} />
+        </div>
+      </main>
     );
   }
 }

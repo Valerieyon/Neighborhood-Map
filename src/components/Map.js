@@ -12,7 +12,6 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     {props.markers &&
       props.markers.filter(marker => marker.isVisible).map((marker, idx, arr) => {
         const venueInfo = props.venues.find(venue => venue.id === marker.id)
-         console.log(venueInfo);
         return (
         <Marker
           key={idx}
@@ -21,7 +20,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
           animation = {marker.isOpen === true ? google.maps.Animation.BOUNCE : google.maps.Animation.DROP}
         >
            {marker.isOpen && venueInfo.bestPhoto && (
-            <InfoWindow>
+            <InfoWindow tabIndex="5" aria-label="Detailed Information about the selected location" >
               <React.Fragment>
                 <img src={`${venueInfo.bestPhoto.prefix}180x180${venueInfo.bestPhoto.suffix}`} alt={"Venue front or Products sold in venue"} />
                 <p>{venueInfo.name}</p>
