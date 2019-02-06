@@ -47,16 +47,11 @@ class App extends Component {
     })
     
   }
-  // setAnimationToBounce = (marker) => {
-  //   google.maps.event.addListener(marker, 'click', function() {
-  //     marker.setAnimation(google.maps.Animation.BOUNCE); 
-  //   });
-  // }
+
   handleListItemClick = (venue) => {
     const marker = this.state.markers.find(marker => marker.id === venue.id);
     this.handleMarkerClick(marker);
     this.closeMenu();
-    // this.setAnimationToBounce();
   }
   
   componentDidMount() {
