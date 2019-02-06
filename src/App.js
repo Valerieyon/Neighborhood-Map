@@ -7,7 +7,7 @@ import CheeseburgerMenu from 'cheeseburger-menu'
 import HamburgerMenu from 'react-hamburger-menu'
 import SideBar from './components/SideBar';
 
-window.gm_authFailure = function() {
+window.gm_authFailure = function () {
   alert(`
    Google Maps failed to load!
    
@@ -15,6 +15,23 @@ window.gm_authFailure = function() {
    or you are using an invalid API key.`);
 }
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  componentDidCatch(error, info) {
+    // Display fallback UI
+    this.setState({ hasError: true });
+  }
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>;
+    }
+    return this.props.children;
+  }
+}
 class App extends Component {
   constructor() {
     super();
@@ -52,7 +69,7 @@ class App extends Component {
       this.setState({ venues: Object.assign(this.state.venues, newVenue) });
 
     })
-    
+
   }
 
   handleListItemClick = (venue) => {
@@ -62,13 +79,13 @@ class App extends Component {
   }
   handleClick = () => {
     if (this.state.menuOpen === false) {
-  		this.openMenu();
-    } 
+      this.openMenu();
+    }
   }
-  
+
   componentDidMount() {
     FoursquareAPI.search({
-      near: "Manhattan,NY",
+      near: "Chicago,IL",
       query: "organic",
       limit: 12
     }).then(results => {
@@ -84,34 +101,36 @@ class App extends Component {
         }
       });
       this.setState({ venues, center, markers });
-      
+
     });
   }
 
   render() {
     return (
-      <main>
-        <div className="App" role="application" aria-label="Map of New York locations with organic products">
-          <p id="sideBarHint" tabIndex="1">Click TAB then ENTER or on green bar for list view of all the locations from Foursquare</p>
-          
-          <button className="hamburger-container" tabIndex="2" aria-label="Toggle side menu" onClick={this.handleClick}>
-            <CheeseburgerMenu
-               isOpen={this.state.menuOpen}
-               closeCallback={this.closeMenu.bind(this)}
-            >
-              <SideBar {...this.state} handleListItemClick={this.handleListItemClick} />
-            </CheeseburgerMenu>
-            <HamburgerMenu
-              isOpen={this.state.menuOpen}
-              menuClicked={this.openMenu.bind(this)}
-              strokeWidth={1500}
-							height={22}
-							color={"green"}
-            />     
-          </button>  
-          <Map {...this.state} handleMarkerClick={this.handleMarkerClick} />
-        </div>
-      </main>
+      <ErrorBoundary>
+        <main>
+          <div className="App" role="application" aria-label="Map of Chicago locations with organic products">
+            <p id="sideBarHint" tabIndex="1">Click TAB then ENTER or on green bar for list view of all the locations from Foursquare</p>
+
+            <button className="hamburger-container" tabIndex="2" aria-label="Toggle side menu" onClick={this.handleClick}>
+              <CheeseburgerMenu
+                isOpen={this.state.menuOpen}
+                closeCallback={this.closeMenu.bind(this)}
+              >
+                <SideBar {...this.state} handleListItemClick={this.handleListItemClick} />
+              </CheeseburgerMenu>
+              <HamburgerMenu
+                isOpen={this.state.menuOpen}
+                menuClicked={this.openMenu.bind(this)}
+                strokeWidth={3}
+                height={22}
+                color={"green"}
+              />
+            </button>
+            <Map {...this.state} handleMarkerClick={this.handleMarkerClick} />
+          </div>
+        </main>
+      </ErrorBoundary>
     );
   }
 }

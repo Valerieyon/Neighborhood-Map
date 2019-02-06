@@ -6,7 +6,7 @@ class Helper {
         const keys = {
             client_id:"LFNSSANNNFBBRFQO0MOQYD5PCY23WARBFYM53HXQESRWNUVJ",
             client_secret:"NIZBI3VGHJWZXKUW4CYI2XOWQRSYEZCJL1WGODLN3DJK5UHU",
-            v:'20190130'
+            v:'20190206'
         }
         return Object.keys(keys)
             .map(key => `${key}=${keys[key]}`)
@@ -34,6 +34,7 @@ class Helper {
             `${Helper.baseURL()}${endPoint}?${Helper.auth()}&${Helper.urlBuilder(urlParams)}`,
             requestData)
             .then(result => result.json());
+            
     }
     
 }

@@ -1,5 +1,31 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Neighborhood Map Project
+A single page application featuring a Google map of Chicago. A functionality is added to this map including highlighted locations, third-party(Foursquare) data about those locations and various ways to browse the content.
+
+## Using the App
+
+* start the development server with `npm start` when in the project folder using the Terminal
+
+* Service workers require HTTPS, although to facilitate local testing, that policy does not apply to localhost. If your production web server does not support HTTPS, then the service worker registration will fail, but the rest of your web app will remain functional.
+(https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) for more information.
+
+## Contributing
+
+This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+
+For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Credits
+
+Forrest Walker for (Udacity) Project 7 Neighborhood Walk Through videos: https://www.youtube.com/playlist?list=PL4rQq4MQP1crXuPtruu_eijgOUUXhcUCP 
+
+Error Boundaries: https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html
+
+Hamburger Menu: https://codesandbox.io/s/qxL744Qx2
+
+
+*********************
 ## Available Scripts
 
 In the project directory, you can run:
@@ -42,22 +68,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
 ### Deployment
 

@@ -37,14 +37,17 @@ export default class SideBar extends Component {
     
   }
   render() {
+    
     return (
       <div className="sideBar">
         <label htmlFor={"search"}>Search:</label> 
         <input type={"search"} id={"search"} tabIndex="3" aria-label="Filter New York Organic places" placeholder={"Find Venues"} onChange = {this.handleChange}/>
         <p className="hint">Click outside the menu to close it, or swipe it closed on touch device</p>
-        <VenueList {...this.props} 
+        
+          <VenueList {...this.props} 
           venues={this.handleFilterVenues()} 
-          handleListItemClick={this.props.handleListItemClick}/>
+          handleListItemClick={this.props.handleListItemClick}/> 
+        }
       </div>
     )
   }
